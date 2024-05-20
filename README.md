@@ -4,7 +4,7 @@
 </span>
 
 ## <span style="color:#28a745;">Description</span>
-WeatherApp is a friendly mobile app made to give you the latest weather info quickly. It's easy to use and gets its data from a good public source. You'll find the weather displayed in a simple way that anyone can understand.
+WeatherApp is a friendly web app that helps you check the current weather in a city easily. It's simple to use and gets its weather information from a open public source. You'll see the weather presented in a clear way that everyone can understand. Plus, you can look back at your past searches and sort them by date or city name.
 ### <span style="color:#ffc107;">Instructions to Run the App</span>
 1. Frontend and Backend in the differect repository (links are provided).
 2. Clone the repository Client - git clone https://github.com/krishnaprasad45/WeatherApp-Client.git
@@ -32,5 +32,6 @@ WeatherApp is a friendly mobile app made to give you the latest weather info qui
 <a href="https://github.com/krishnaprasad45/WeatherApp-Server.git"><h2>CLICK HERE TO SEE THE SERVER SIDE CODE 🌟</h2></a>
 ---
 
-![Thumbnail](https://drive.google.com/uc?id=1huO5WGIfp99xKiphMEXGInzF7cdOlaFF)
+[![Thumbnail Image](https://drive.google.com/uc?id=12ry1wvHkbMgMEgGMH55WVVO5f8ih99Ch)](https://drive.google.com/file/d/1KfTUxoKJnYvDkDqPsiQ2b-40hW2NkC4B/view?usp=sharing)
+
 
