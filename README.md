@@ -6,7 +6,7 @@
 ## <span style="color:#28a745;">Description</span>
 WeatherApp is a friendly web app that helps you check the current weather in a city easily. It's simple to use and gets its weather information from a open public source. You'll see the weather presented in a clear way that everyone can understand. Plus, you can look back at your past searches and sort them by date or city name.
 ### <span style="color:#ffc107;">Instructions to Run the App</span>
-1. Frontend and Backend in the differect repository (links are provided).
+1. Frontend and Backend in the different repository (links are provided).
 2. Clone the repository Client - git clone https://github.com/krishnaprasad45/WeatherApp-Client.git
 3. Install dependencies using `npm install`
 4. Start the development server using `npm run dev`.
@@ -17,7 +17,10 @@ WeatherApp is a friendly web app that helps you check the current weather in a c
 2. Tailwind CSS
 3. TypeScript
 4. axios -Improved, efficienct and reliable in fetching data from APIs
-5. ESLint - (To maintain consistent coding standards and identifies potential errors)
+5. lodash - For efficient debounce functionality, delaying function execution until after a specified time interval has elapsed.
+6. ESLint - (To maintain consistent coding standards and identifies potential errors)
+7. React Toastify - (For showing pop-ups , messages to the user.)
+8. React Date Picker - (For date picking, Here date based filtering)
 
 ### Optimization Techniques Used
 
