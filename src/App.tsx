@@ -1,19 +1,25 @@
-import Weather from "./components/Weather/Weather";
-import { imageUrls } from "./constants/strings";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import "./styles/tailwind.css";
+import Spinner from "./components/spinner/Spinner";
+import React from "react";
+
+const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const ListRecordPage = lazy(() => import("./pages/ListRecordPage/ListRecordPage"));
+
+
+const MemoizedSpinner = React.memo(Spinner);
 
 function App() {
   return (
-    <div
-      className="flex flex-col items-center justify-center min-h-screen"
-      style={{
-        backgroundImage: `url(${imageUrls.imageUrl1})`,
-        backgroundSize: "cover",
-      }}
-    >
-      <h1 className="text-3xl mb-8 font-bold text-center">Weather Forecast App</h1>
-      <Weather />
-    </div>
+    <Router>
+      <Suspense fallback={<MemoizedSpinner />}>
+        <Routes>
+          <Route path="/history" element={<ListRecordPage />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Suspense>
+    </Router>
   );
 }
 

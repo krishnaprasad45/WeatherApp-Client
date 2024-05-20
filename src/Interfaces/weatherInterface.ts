@@ -1,5 +1,6 @@
 export default interface WeatherData {
   name: string;
+  createdAt:string;
   main: {
     temp: number;
     feels_like: number;

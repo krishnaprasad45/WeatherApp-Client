@@ -1,78 +1,68 @@
-import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
-import axios from "axios";
-import { WiDaySunny, WiCloud, WiRain } from "react-icons/wi"; // Import necessary icons
+import React, { useState, ChangeEvent, FormEvent, useCallback,  } from "react";
+import { WiDaySunny, WiCloud, WiRain } from "react-icons/wi";
 import WeatherData from "../../Interfaces/weatherInterface";
+import { userAxios } from "../../Constraints/axiosInterceptor";
+import { showErrorToast } from "../../services/popups/popups";
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const Weather: React.FC = () => {
+const Weather: React.FC = React.memo(() => {
   const [city, setCity] = useState<string>("");
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-  const weatherApi = import.meta.env.VITE_WEATHER_API;
+  const navigate = useNavigate();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${weatherApi}`
-      );
+      const response = await userAxios.post("/weather", { data: city });
       setWeatherData(response.data);
-      console.log(response.data); 
-      await sendWeatherDataToBackend(response.data);
     } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const sendWeatherDataToBackend = async (weatherData: unknown) => {
-    try {
-      const response = await fetch('store/data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ weatherData }),
-      });
-
-      if (!response.ok) {
-        console.error('Failed to send weather data to backend:', response.statusText);
+      if (axios.isAxiosError(error) && error.response?.status === 500) {
+        showErrorToast("City not found");
+      } else {
+        showErrorToast("Weather data fetching failed, please try again.");
       }
-    } catch (error) {
-      console.error('Error sending weather data to backend:', error);
-    }
-  };
-
-  useEffect(() => {
-    if (city) {
-      fetchData();
     }
   }, [city]);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setCity(e.target.value);
-  };
+  }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchData();
-  };
+  }, [fetchData]);
 
-  const renderWeatherIcon = (description: string) => {
+  const renderWeatherIcon = useCallback((description: string) => {
     switch (description) {
-      case 'clear sky':
+      case "clear sky":
         return <WiDaySunny size={64} />;
-      case 'few clouds':
-      case 'scattered clouds':
-      case 'broken clouds':
+      case "few clouds":
+      case "scattered clouds":
+      case "broken clouds":
         return <WiCloud size={64} />;
-      case 'shower rain':
-      case 'rain':
-      case 'thunderstorm':
+      case "shower rain":
+      case "rain":
+      case "thunderstorm":
         return <WiRain size={64} />;
       default:
         return <WiDaySunny size={64} />;
     }
-  };
+  }, []);
+
+  const handleHistoryClick = useCallback(() => {
+    navigate('/history');
+  }, [navigate]);
 
   return (
     <div className="flex flex-col items-center">
+      <button
+        onClick={handleHistoryClick}
+        className="absolute top-0 right-0 mt-4 mr-4 p-2 bg-blue-700 text-white rounded-lg shadow-md"
+      >
+        History
+      </button>
       <form onSubmit={handleSubmit} className="mb-6 flex flex-col items-center">
         <input
           type="text"
@@ -88,6 +78,7 @@ const Weather: React.FC = () => {
           Get Weather
         </button>
       </form>
+      <ToastContainer/>
       {weatherData ? (
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
           <div className="text-center">
@@ -116,10 +107,10 @@ const Weather: React.FC = () => {
           </div>
         </div>
       ) : (
-        <p className="text-white">Loading weather data...</p>
+        <p className="text-white"></p>
       )}
     </div>
   );
-};
+});
 
 export default Weather;
